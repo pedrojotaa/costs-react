@@ -1,25 +1,28 @@
 import { Link } from "react-router-dom";
 import logo from "../../img/costs_logo.png";
 import Container from "./Container";
+import styles from './Navbar.module.css'
 
 function Navbar() {
   return (
-    <ul>
+    <nav className={styles.navbar}>
       <Container>
         <Link to="/">
           <img src={logo} alt="Costs" />
         </Link>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/contact">Contato</Link>
-        </li>
-        <li>
-          <Link to="/company">Empresa</Link>
-        </li>
+        <ul className={styles.list}>
+          <li className={styles.item}>
+            <Link to="/">Home</Link>
+          </li>
+          <li className={styles.item}>
+            <Link to="/contact">Contato</Link>
+          </li>
+          <li className={styles.item}>
+            <Link to="/company">Empresa</Link>
+          </li>
+        </ul>
       </Container>
-    </ul>
+    </nav>
   );
 }
 
