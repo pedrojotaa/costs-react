@@ -23,7 +23,9 @@ function NewProject() {
       .then((resp) => resp.json())
       .then((data) => {
         //redirect
-        navigate("/projects", { message: "Projeto enviado com sucesso" });
+        navigate("/projects", {
+          state: { message: "Projeto enviado com sucesso" },
+        });
       })
       .catch((err) => console.log(err));
   }
