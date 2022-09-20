@@ -8,9 +8,12 @@ import Message from "../layout/Message";
 import ProjectCard from "../project/ProjectCard";
 
 import styles from "./Projects.module.css";
+import Loading from "../layout/Loader";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
+  //começa com false pq ele sempre inicia com o loading
+  const [removeLoading, setRemoveLoading] = useState(false);
 
   const location = useLocation();
 
@@ -28,6 +31,8 @@ function Projects() {
       .then((resp) => resp.json())
       .then((data) => {
         setProjects(data);
+        //quando terminar de carregar os projetos colocamos o loader como true
+        setRemoveLoading(true);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -40,6 +45,7 @@ function Projects() {
       </div>
       {message && <Message msg={message} type="success" />}
       <Container customClass="start">
+        {/* so exibe se os projeto estiverem carregados */}
         {projects.length > 0 &&
           //o retorno é um objeto, portanto é recebido 'entre parênteses ()'
           projects.map((project) => (
@@ -51,6 +57,10 @@ function Projects() {
               key={project.id}
             />
           ))}
+        {!removeLoading && <Loading />}
+        {removeLoading && projects.length === 0 && (
+          <p>Não há projetos cadastrados</p>
+        )}
       </Container>
     </div>
   );
