@@ -14,6 +14,7 @@ function Projects() {
   const [projects, setProjects] = useState([]);
   //começa com false pq ele sempre inicia com o loading
   const [removeLoading, setRemoveLoading] = useState(false);
+  const [projectMessage, setProjectMessage] = useState("");
 
   const location = useLocation();
 
@@ -46,7 +47,8 @@ function Projects() {
     })
       .then((resp) => resp.json())
       .then(() => {
-        setProjects(projects.filter((project) => project.id !== id))
+        setProjects(projects.filter((project) => project.id !== id));
+        setProjectMessage("Projeto removido com sucesso");
       })
       .catch((err) => console.log(err));
   }
@@ -58,6 +60,7 @@ function Projects() {
         <LinkButton to="/newproject" text="Criar Projeto" />
       </div>
       {message && <Message msg={message} type="success" />}
+      {projectMessage && <Message msg={projectMessage} type="success" />}
       <Container customClass="start">
         {/* so exibe se os projeto estiverem carregados */}
         {projects.length > 0 &&
