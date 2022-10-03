@@ -5,11 +5,15 @@ import { useState, useEffect } from "react";
 
 import Loading from "../layout/Loader";
 import Container from "../layout/Container";
+import ProjectForm from "../project/ProjectForm";
+import Message from "../layout/Message";
 
 function Project() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
+  const [message, setMessage] = useState("");
+  const [typeMessage, setTypeMessage] = useState("");
 
   function toggleProjectForm() {
     setShowProjectForm(!showProjectForm);
@@ -29,11 +33,36 @@ function Project() {
       .catch((err) => console.log(err));
   }, [id]);
 
+  function updatePost(project) {
+    if (project.budget < project.cost) {
+      setMessage("O orçamento não pode ser menor que o custo do projeto");
+      setTypeMessage("error");
+      return false;
+    }
+
+    fetch(`http://localhost:5000/projects/${project.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setProject(data);
+        setShowProjectForm(false);
+        setMessage("Projeto atualizado com sucesso");
+        setTypeMessage("success");
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <>
       {project.name ? (
         <div className={styles.project_details}>
           <Container customClass="column">
+            {message && <Message msg={message} type={typeMessage} />}
             <div className={styles.details_container}>
               <h1>Projeto: {project.name}</h1>
               <button onClick={toggleProjectForm} className={styles.btn}>
@@ -53,7 +82,11 @@ function Project() {
                 </div>
               ) : (
                 <div className={styles.project_info}>
-                  <p>Form</p>
+                  <ProjectForm
+                    handleSubmit={updatePost}
+                    btnText="Concluir Edição"
+                    projectData={project}
+                  />
                 </div>
               )}
             </div>

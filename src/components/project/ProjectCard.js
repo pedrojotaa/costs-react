@@ -4,7 +4,7 @@ import { BsPencil, BsFillTrashFill } from "react-icons/bs";
 
 import { Link } from "react-router-dom";
 
-function ProjectCard({ id, name, budget, category, key, handleRemoveProject }) {
+function ProjectCard({ id, name, budget, category, handleRemoveProject }) {
   const remove = (e) => {
     e.preventDefault();
     handleRemoveProject(id);
