@@ -2,7 +2,7 @@ import styles from "./Project.module.css";
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { parse, v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 import Loading from "../layout/Loader";
 import Container from "../layout/Container";
@@ -37,6 +37,7 @@ function Project() {
 
   function updatePost(project) {
     setMessage("");
+
     if (project.budget < project.cost) {
       setMessage("O orçamento não pode ser menor que o custo do projeto");
       setTypeMessage("error");
@@ -68,7 +69,32 @@ function Project() {
     setShowServiceForm(!showServiceForm);
   }
 
-  function removeService() {}
+  function removeService(id, cost) {
+    const serviceUpdated = project.services.filter(
+      (service) => service.id !== id
+    );
+      console.log(serviceUpdated)
+    const projectUpdated = project;
+    console.log(projectUpdated.id)
+    projectUpdated.services = serviceUpdated;
+    projectUpdated.cost = parseFloat(projectUpdated.cost) - parseFloat(cost);
+
+    fetch(`http://localhost:5000/projects/${projectUpdated.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(projectUpdated),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setProject(projectUpdated);
+        setServices(serviceUpdated);
+        setMessage("Serviço removido com sucesso");
+        setTypeMessage("success");
+      })
+      .catch((err) => console.log(err));
+  }
 
   function createService(project) {
     setMessage("");
