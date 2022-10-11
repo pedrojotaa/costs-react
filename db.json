@@ -1,14 +1,45 @@
 {
   "projects": [
     {
-      "name": "teste",
-      "budget": "2000",
+      "name": "projeto teste",
+      "budget": "400",
       "category": {
-        "id": "3",
-        "name": "Design"
+        "id": "1",
+        "name": "Desenvolvimento"
       },
-      "cost": 0,
-      "services": [],
+      "cost": 344,
+      "services": [
+        {
+          "name": "teste 1",
+          "cost": "20",
+          "description": "teste",
+          "id": "d45f5bfe-6044-4d4a-8490-411958bdccbc"
+        },
+        {
+          "name": "teste 2",
+          "cost": "20",
+          "description": "teste",
+          "id": "43e49c4c-f4fa-4837-af55-599382dfc915"
+        },
+        {
+          "name": "gergre",
+          "cost": "300",
+          "description": "fdfsd",
+          "id": "2bcecb12-dd16-4e99-aee6-088329f2e8d1"
+        },
+        {
+          "name": "efef",
+          "cost": "2",
+          "description": "aas",
+          "id": "80489c2f-d8fe-45a8-b65f-f03105ab4bc3"
+        },
+        {
+          "name": "wefdfsd",
+          "cost": "2",
+          "description": "dsfsd",
+          "id": "0ef59c54-d64b-499b-9ec2-f6f18ac25a77"
+        }
+      ],
       "id": 1
     }
   ],
